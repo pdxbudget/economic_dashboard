@@ -45,9 +45,10 @@ Row
 
 ### Portland City Unemployment Rate
 ```{r}
-
 data$fred$unemploy <- 
-  get_fredr_series("PORT941URN", "data_fred_unemploy")
+  get_fredr_series(
+    c("PORT941URN", "AUST448URN", "INDI918URN"),
+    "data_fred_unemploy")
 
 plot_fred(data$fred$unemploy)
 ```

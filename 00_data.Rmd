@@ -19,13 +19,14 @@ get_fredr_series <- function(series_id, file_name) {
       month(today())) {
     params <- get("params")
     
-    data <- fredr(
-      series_id = series_id,
+    data <- map(series_id, fredr,
       observation_start = params$start_date,
-      observation_end = params$end_date
-    )
+      observation_end = params$end_date) %>%
+      bind_rows()
     
     saveRDS(data, paste0("inputs/", file_name, ".rds"))
+    
+    return(data)
   } else {
     readRDS(paste0("inputs/", file_name, ".rds"))
   }
