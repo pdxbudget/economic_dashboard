@@ -46,6 +46,10 @@ Row
 ### Portland City Unemployment Rate
 ```{r}
 
+data$fred$unemploy <- 
+  get_fredr_series("PORT941URN", "data_fred_unemploy")
+
+plot_fred(data$fred$unemploy)
 ```
 
 
@@ -57,15 +61,7 @@ Row
 ```{r}
 data$fred$cpi <- get_fredr_series("CUURA400SA0", "data_fred_cpi")
 
-ggplotly(
-  data$fred$cpi %>%
-    ggplot(aes(x = date, y = value, group = series_id)) +
-    geom_line(aes(color = series_id)) +
-    scale_y_continuous() +
-    scale_color_viridis(discrete=TRUE) +
-    labs(title = "Consumer Price Index, West-Size A") +
-    theme_minimal()
-)
+plot_fred(data$fred$cpi)
 ```
 
 
