@@ -18,11 +18,14 @@ library(lubridate)
 library(plotly)
 library(viridis)
 library(flexdashboard)
+library(scales)
 
 params <- list(
   start_date = ymd("2018-07-01"),
   end_date = today()
 )
+
+source("formatting.R")
 ```
 
 ```{r, child='00_data.Rmd'}
