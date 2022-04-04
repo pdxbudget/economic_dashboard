@@ -1,0 +1,22 @@
+```{r, data_port}
+# if port data was last modified last month (or before that),
+# download new file
+if (month(file.mtime("inputs/data_port.xlsx")) < month(today())) {
+  download.file(
+  "https://cdn.portofportland.com/pdfs/February%202022%20Statistics%20(Excel).xlsx", 
+  destfile = "inputs/data_port.xlsx", mode = "wb")
+}
+
+port_data <- list()
+port_data$passenger <- read_xlsx(
+  "inputs/data_port.xlsx", sheet = "Passenger Traffic Report",
+  skip = 5)
+port_data$freight <- read_xlsx(
+  "inputs/data_port.xlsx", sheet = "Freight Traffic Report",
+  skip = 5)
+
+port_data <- port_data %>%
+  map(filter, Carrier %in% c("PDX Total", "PDX Total *")) %>%
+  map(select, 5:7) # keep YTD columns only
+```
+

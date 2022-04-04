@@ -18,7 +18,16 @@ library(lubridate)
 library(plotly)
 library(viridis)
 library(flexdashboard)
+
+params <- list(
+  start_date = ymd("2018-07-01"),
+  end_date = today()
+)
 ```
+
+```{r, child='00_data.Rmd'}
+```
+
 
 Economy
 =====================================  
