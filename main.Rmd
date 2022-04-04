@@ -22,7 +22,7 @@ library(scales)
 
 params <- list(
   start_date = ymd("2018-07-01"),
-  end_date = today()
+  end_date = today() - months(2)
 )
 
 source("formatting.R")
