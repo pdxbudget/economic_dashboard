@@ -1,0 +1,82 @@
+---
+title: "City of Portland Economics Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: 
+      version: 4
+      bootswatch: sandstone
+    orientation: row
+    vertical_layout: scroll
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readxl)
+library(fredr)
+library(lubridate)
+library(plotly)
+library(viridis)
+library(flexdashboard)
+```
+
+Economy
+=====================================  
+
+Row
+-------------------------------------
+
+### Total Employment, Portland MSA 
+
+Row
+-------------------------------------
+
+### Portland City Unemployment Rate
+```{r}
+
+```
+
+
+Row
+-------------------------------------
+
+### Consumer Price Index, West-Size A
+
+```{r}
+
+```
+
+
+Real Estate
+===================================== 
+
+Row
+-------------------------------------
+### Median Home Price, Portland Metro
+
+Row
+-------------------------------------
+### Portland Metro Industrial Vacancy Rate
+
+Row
+-------------------------------------
+### Portland Office Vacancy Rate
+
+Row
+-------------------------------------
+### Multnomah County Multi-Family Vacancy Rate
+
+Commerce
+=====================================  
+
+Row
+-------------------------------------
+### Total Air Passengers (Y-T-D)
+
+Row
+-------------------------------------
+### Total Freight (Y-T-D in Tons)
+
+Row
+-------------------------------------
+### Total Port of Portland Marine Freight (Y-T-D in Tons)
