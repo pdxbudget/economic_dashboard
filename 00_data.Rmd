@@ -4,6 +4,34 @@ data$fred <- list()
 data$port <- list()
 ```
 
+```{r, data_fred}
+
+# This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis.
+
+fredr_set_key(fredr_get_key())
+
+get_fredr_series <- function(series_id, file_name) {
+  
+  # if FRED data was last modified last month (or before that),
+  # fetch new data
+  
+  if (month(file.mtime(paste0("inputs/", file_name, ".rds"))) <
+      month(today())) {
+    params <- get("params")
+    
+    data <- fredr(
+      series_id = series_id,
+      observation_start = params$start_date,
+      observation_end = params$end_date
+    )
+    
+    saveRDS(data, paste0("inputs/", file_name, ".rds"))
+  } else {
+    readRDS(paste0("inputs/", file_name, ".rds"))
+  }
+}
+```
+
 ```{r, data_port}
 # if port data was last modified last month (or before that),
 # download new file
