@@ -1,0 +1,29 @@
+Commerce
+=====================================  
+
+Row
+-------------------------------------
+### Total Air Passengers (YTD)
+
+```{r}
+valueBox(
+  format_number(data$port$passenger[[1]], accuracy = 1L),
+  icon = "fa-plane")
+```
+
+
+Row
+-------------------------------------
+### Total Freight (YTD in Tons)
+
+```{r}
+valueBox(
+  format_number(data$port$freight[[1]], accuracy = 1L), 
+  icon = "fa-dolly")
+```
+
+
+
+Row
+-------------------------------------
+### Total Port of Portland Marine Freight (Y-T-D in Tons)

@@ -1,0 +1,18 @@
+Real Estate
+===================================== 
+
+Row
+-------------------------------------
+### Median Home Price, Portland Metro
+
+Row
+-------------------------------------
+### Portland Metro Industrial Vacancy Rate
+
+Row
+-------------------------------------
+### Portland Office Vacancy Rate
+
+Row
+-------------------------------------
+### Multnomah County Multi-Family Vacancy Rate

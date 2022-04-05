@@ -1,0 +1,99 @@
+Economy
+=====================================  
+
+```{r}
+h3("Total Employment, Portland MSA")
+```
+
+Row
+-------------------------------------
+
+### Total Employment as of Feb 2022
+
+```{r}
+data$fred$employ <- 
+  get_fredr_series(
+    c("PORT941NA", "AUST448NA", "INDI918NA"),
+    "data_fred_employ")
+
+get_fred_latest_value <- function(df) {
+  df %>%
+    filter(series_id == "Portland",
+           date == max(date)) %>%
+    pull(value)
+}
+
+valueBox(
+    format_number(
+      get_fred_latest_value(data$fred$employ) , accuracy = 1L))
+```
+
+Row
+-------------------------------------
+
+### History
+
+```{r}
+plot_fred(data$fred$employ)
+```
+
+Row {data-height=75}
+-------------------------------------
+
+```{r}
+h3("Unemployment Rate, Portland MSA")
+```
+
+Row
+-------------------------------------
+
+### Unemployment as of Feb 2022
+
+```{r}
+data$fred$unemploy <- 
+  get_fredr_series(
+    c("PORT941URN", "AUST448URN", "INDI918URN"),
+    "data_fred_unemploy")
+
+valueBox(
+    format_number(
+      get_fred_latest_value(data$fred$unemploy), accuracy = 1L))
+```
+
+Row
+-------------------------------------
+
+### History
+
+```{r}
+plot_fred(data$fred$unemploy)
+```
+Row {data-height=75}
+-------------------------------------
+
+```{r}
+h3("Consumer Price Index, West-Size A")
+```
+
+Row
+-------------------------------------
+
+### Consumer Price Index as of Feb 2022
+
+```{r}
+data$fred$cpi <- get_fredr_series("CUURA400SA0", "data_fred_cpi")
+
+valueBox(
+    format_number(
+      get_fred_latest_value(data$fred$cpi), accuracy = 1L))
+```
+
+
+Row
+-------------------------------------
+
+### History
+
+```{r}
+plot_fred(data$fred$cpi)
+```

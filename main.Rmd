@@ -26,91 +26,17 @@ params <- list(
 )
 
 source("formatting.R")
+source("plotting.R")
 ```
 
 ```{r, child='00_data.Rmd'}
 ```
 
-
-Economy
-=====================================  
-
-Row
--------------------------------------
-
-### Total Employment, Portland MSA 
-
-Row
--------------------------------------
-
-### Portland City Unemployment Rate
-```{r}
-data$fred$unemploy <- 
-  get_fredr_series(
-    c("PORT941URN", "AUST448URN", "INDI918URN"),
-    "data_fred_unemploy")
-
-plot_fred(data$fred$unemploy)
+```{r, child='01_economy.Rmd'}
 ```
 
-
-Row
--------------------------------------
-
-### Consumer Price Index, West-Size A
-
-```{r}
-data$fred$cpi <- get_fredr_series("CUURA400SA0", "data_fred_cpi")
-
-plot_fred(data$fred$cpi)
+```{r, child='02_real_estate.Rmd'}
 ```
 
-
-Real Estate
-===================================== 
-
-Row
--------------------------------------
-### Median Home Price, Portland Metro
-
-Row
--------------------------------------
-### Portland Metro Industrial Vacancy Rate
-
-Row
--------------------------------------
-### Portland Office Vacancy Rate
-
-Row
--------------------------------------
-### Multnomah County Multi-Family Vacancy Rate
-
-Commerce
-=====================================  
-
-Row
--------------------------------------
-### Total Air Passengers (YTD)
-
-```{r}
-valueBox(
-  format_number(port_data$passenger[[1]], accuracy = 1L),
-  icon = "fa-plane")
+```{r, child='03_commerce.Rmd'}
 ```
-
-
-Row
--------------------------------------
-### Total Freight (YTD in Tons)
-
-```{r}
-valueBox(
-  format_number(port_data$freight[[1]], accuracy = 1L), 
-  icon = "fa-dolly")
-```
-
-
-
-Row
--------------------------------------
-### Total Port of Portland Marine Freight (Y-T-D in Tons)
