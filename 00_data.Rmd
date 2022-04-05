@@ -25,7 +25,12 @@ get_fredr_series <- function(series_id, file_name) {
     data <- map(series_id, fredr,
       observation_start = params$start_date,
       observation_end = params$end_date) %>%
-      bind_rows()
+      bind_rows() %>%
+      mutate(series_id = str_trunc(series_id, 4, "right", ""),
+             series_id = case_when(
+               series_id == "PORT" ~ "Portland",
+               series_id == "AUST" ~ "Austin",
+               series_id == "INDI" ~ "Indianapolis"))
     
     saveRDS(data, paste0("inputs/", file_name, ".rds"))
     
