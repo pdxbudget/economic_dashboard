@@ -25,8 +25,9 @@ params <- list(
   end_date = today() - months(2)
 )
 
-source("formatting.R")
-source("plotting.R")
+source("r/fred.R")
+source("r/formatting.R")
+source("r/plotting.R")
 ```
 
 ```{r, child='00_data.Rmd'}
