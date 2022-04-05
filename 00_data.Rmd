@@ -12,11 +12,14 @@ fredr_set_key(fredr_get_key())
 
 get_fredr_series <- function(series_id, file_name) {
   
-  # if FRED data was last modified last month (or before that),
-  # fetch new data
-  
-  if (month(file.mtime(paste0("inputs/", file_name, ".rds"))) <
+  if (
+    # if rds file is NOT in the inputs folder OR...
+    !file.exists(paste0("inputs/", file_name, ".rds")) |
+    # if FRED data was last modified last month (or before that)...
+    month(file.mtime(paste0("inputs/", file_name, ".rds"))) <
       month(today())) {
+    # ... fetch new data
+    
     params <- get("params")
     
     data <- map(series_id, fredr,
@@ -34,13 +37,16 @@ get_fredr_series <- function(series_id, file_name) {
 ```
 
 ```{r, data_port}
-# if port data was last modified last month (or before that),
-# download new file
-
-if (month(file.mtime("inputs/data_port.xlsx")) < month(today())) {
+if (
+  # if xlsx file is NOT in the inputs folder OR...
+  !file.exists("inputs//data_port.xlsx") |
+  # if port data was last modified last month (or before that)...
+  month(file.mtime("inputs/data_port.xlsx")) < month(today())) {
+  # ... fetch new data
+  
   download.file(
-  "https://cdn.portofportland.com/pdfs/February%202022%20Statistics%20(Excel).xlsx", 
-  destfile = "inputs/data_port.xlsx", mode = "wb")
+    "https://cdn.portofportland.com/pdfs/February%202022%20Statistics%20(Excel).xlsx", 
+    destfile = "inputs/data_port.xlsx", mode = "wb")
 }
 
 data$port$passenger <- read_xlsx(
