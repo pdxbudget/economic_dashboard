@@ -1,4 +1,4 @@
-get_fredr_series <- function(series_id, file_name) {
+get_fredr_series <- function(series_id, file_name, params) {
   
   if (
     # if rds file is NOT in the inputs folder OR...
@@ -7,9 +7,7 @@ get_fredr_series <- function(series_id, file_name) {
     month(file.mtime(paste0("inputs/", file_name, ".rds"))) <
     month(today())) {
     # ... fetch new data
-    
-    params <- get("params")
-    
+  
     data <- map(series_id, fredr,
                 observation_start = params$start_date,
                 observation_end = params$end_date) %>%
@@ -29,7 +27,7 @@ get_fredr_series <- function(series_id, file_name) {
 }
 
 get_fred_latest_value <- function(df) {
-  if (unique(df$series_id) == 1) {
+  if (length(unique(df$series_id)) == 1) {
     # if only 1 series_id, assume that we're not 
     # comparing to peer regions
     df %>%
