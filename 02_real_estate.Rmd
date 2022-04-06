@@ -1,9 +1,37 @@
 Real Estate
 ===================================== 
 
+
+Row {data-height=75}
+-------------------------------------
+
+```{r}
+h3("S&P/Case-Shiller OR-Portland Home Price Index")
+```
+
 Row
 -------------------------------------
-### Median Home Price, Portland Metro
+
+### Home Price Index as of Jan 2022
+
+```{r}
+data$fred$home_price <- get_fredr_series("POXRSA", "data_fred_home_price", params)
+
+valueBox(
+    format_number(
+      get_fred_latest_value(data$fred$home_price), accuracy = 1L))
+```
+
+
+Row
+-------------------------------------
+
+### History
+
+```{r}
+plot_fred(data$fred$cpi)
+```
+
 
 Row
 -------------------------------------
