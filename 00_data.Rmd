@@ -31,6 +31,20 @@ data$census_bps <- read.delim(
 
 colnames(data$census_bps) <- paste(data$census_bps[1, ], data$census_bps[2, ])
 
+data$census_bps <- data$census_bps %>%
+  pivot_longer(cols = -(`Survey Date`:`Place Name`)) %>%
+  filter(`Place Name` == "Portland") %>%
+  mutate(
+    name = str_trim(name),
+    # Cols are missing names under original data structure; this pulls the # of units
+    # across all column names
+    name = case_when(
+      name == "Value" ~ paste(lag(gsub(" Units", "", name), 1), name),
+      name == "Bldgs" ~ paste(lead(gsub(" Units", "", name), 1), name),
+      TRUE ~ name))
+```
+
+
 ```{r, data_port}
 if (
   # if xlsx file is NOT in the inputs folder OR...
