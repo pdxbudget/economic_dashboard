@@ -11,6 +11,26 @@ data$port <- list()
 fredr_set_key(fredr_get_key())
 ```
 
+```{r}
+
+if (
+  # if xlsx file is NOT in the inputs folder OR...
+  !file.exists("inputs/data_census_bps.txt") |
+  # if port data was last modified last month (or before that)...
+  month(file.mtime("inputs/census_bps.txt")) < month(today())) {
+  # ... fetch new data
+  
+  download.file(
+    "https://www2.census.gov/econ/bps/Place/West%20Region/we2202y.txt", 
+    destfile = "inputs/data_census_bps.txt", mode = "wb")
+}
+
+# colnames are across two rows in this dataset
+data$census_bps <- read.delim(
+  "inputs/data_census_bps.txt", sep = ",", header = FALSE, row.names = NULL) 
+
+colnames(data$census_bps) <- paste(data$census_bps[1, ], data$census_bps[2, ])
+
 ```{r, data_port}
 if (
   # if xlsx file is NOT in the inputs folder OR...
