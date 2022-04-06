@@ -14,7 +14,7 @@ Row
 data$fred$employ <- 
   get_fredr_series(
     c("PORT941NA", "AUST448NA", "INDI918NA"),
-    "data_fred_employ")
+    "data_fred_employ", params)
 
 valueBox(
     format_number(
@@ -46,7 +46,7 @@ Row
 data$fred$unemploy <- 
   get_fredr_series(
     c("PORT941URN", "AUST448URN", "INDI918URN"),
-    "data_fred_unemploy")
+    "data_fred_unemploy", params)
 
 valueBox(
     format_number(
@@ -75,7 +75,7 @@ Row
 ### Consumer Price Index as of Feb 2022
 
 ```{r}
-data$fred$cpi <- get_fredr_series("CUURA400SA0", "data_fred_cpi")
+data$fred$cpi <- get_fredr_series("CUURA400SA0", "data_fred_cpi", params)
 
 valueBox(
     format_number(
