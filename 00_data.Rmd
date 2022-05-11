@@ -1,7 +1,6 @@
 ```{r}
 data <- list()
-data$fred <- list()
-data$port <- list()
+data$fred <- data$port <- data$census_bps <- list()
 ```
 
 ```{r, data_fred}
@@ -17,7 +16,7 @@ if (
   # if xlsx file is NOT in the inputs folder OR...
   !file.exists("inputs/data_census_bps.txt") |
   # if port data was last modified last month (or before that)...
-  month(file.mtime("inputs/census_bps.txt")) < month(today())) {
+  month(file.mtime("inputs/data_census_bps.txt")) < month(today())) {
   # ... fetch new data
   
   download.file(
@@ -45,27 +44,42 @@ data$census_bps <- data$census_bps %>%
 ```
 
 
-```{r, data_port}
+```{r, data_port_air}
 if (
   # if xlsx file is NOT in the inputs folder OR...
-  !file.exists("inputs//data_port.xlsx") |
+  !file.exists("inputs/data_port_air.xlsx") |
   # if port data was last modified last month (or before that)...
-  month(file.mtime("inputs/data_port.xlsx")) < month(today())) {
+  month(file.mtime("inputs/data_port_air.xlsx")) < month(today())) {
   # ... fetch new data
   
   download.file(
-    "https://cdn.portofportland.com/pdfs/February%202022%20Statistics%20(Excel).xlsx", 
-    destfile = "inputs/data_port.xlsx", mode = "wb")
+    "https://cdn.portofportland.com/pdfs/March%202022%20Statistics%20(Excel).xlsx", 
+    destfile = "inputs/data_port_air.xlsx", mode = "wb")
 }
 
 data$port$passenger <- read_xlsx(
-  "inputs/data_port.xlsx", sheet = "Passenger Traffic Report",
+  "inputs/data_port_air.xlsx", sheet = "Passenger Traffic Report",
   skip = 5)
 data$port$freight <- read_xlsx(
-  "inputs/data_port.xlsx", sheet = "Freight Traffic Report",
+  "inputs/data_port_air.xlsx", sheet = "Freight Traffic Report",
   skip = 5)
 
 data$port <- data$port %>%
   map(filter, Carrier %in% c("PDX Total", "PDX Total *")) %>%
   map(select, 5:7) # keep YTD columns only
+```
+
+```{r, data_port_marine}
+if (
+  # if xlsx file is NOT in the inputs folder OR...
+  !file.exists("inputs/data_port_marine.pdf") |
+  # if port data was last modified last month (or before that)...
+  month(file.mtime("inputs/data_port_marine.pdf")) < month(today())) {
+  # ... fetch new data
+  
+  download.file(
+    "https://cdn.portofportland.com/pdfs/ExecDirReport2022Mar.pdf", 
+    destfile = "inputs/data_port_marine.pdf", mode = "wb")
+}
+
 ```
