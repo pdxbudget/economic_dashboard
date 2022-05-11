@@ -1,9 +1,16 @@
 Commerce
 =====================================  
 
+Row {data-height=75}
+-------------------------------------
+
+```{r}
+h3("Total Air Passengers")
+```
+
 Row
 -------------------------------------
-### Total Air Passengers (YTD)
+### Total Air Passengers as of March 2022 (YTD)
 
 ```{r}
 valueBox(
@@ -11,10 +18,16 @@ valueBox(
   icon = "fa-plane")
 ```
 
+Row {data-height=75}
+-------------------------------------
+
+```{r}
+h3("Total Air Freight")
+```
 
 Row
 -------------------------------------
-### Total Freight (YTD in Tons)
+### Total Air Freight as of March 2022 (YTD in Tons)
 
 ```{r}
 valueBox(
@@ -22,8 +35,14 @@ valueBox(
   icon = "fa-dolly")
 ```
 
+Row {data-height=75}
+-------------------------------------
 
+```{r}
+h3("Total Marine Freight")
+```
 
 Row
 -------------------------------------
-### Total Port of Portland Marine Freight (Y-T-D in Tons)
+
+### Total Tonnage as of Mar 2022 (YTD)
