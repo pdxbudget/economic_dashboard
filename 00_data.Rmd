@@ -82,4 +82,22 @@ if (
     destfile = "inputs/data_port_marine.pdf", mode = "wb")
 }
 
+data$port$marine <- pdf_text("inputs/data_port_marine.pdf")[1] %>%
+  strsplit("\n") %>%
+  unlist() %>%
+  tibble() %>%
+  set_names("Marine Freight") %>%
+  filter(row_number() > grep("UNIT OF MEASURE: METRIC TONS", `Marine Freight`)) %>%
+  separate(`Marine Freight`,
+           into = c("Month", (year(params$end_date) - 4):year(params$end_date)),
+           sep = "\\s+")%>%
+  filter(Month %in% toupper(month(1:12, label = TRUE, abbr = FALSE))) %>%
+  pivot_longer(as.character((year(params$end_date) - 4):year(params$end_date)),
+               names_to = "Year", values_to = "Total Tonnage") %>%
+  mutate(Date = mdy(paste(Month, "1", Year)),
+         `Total Tonnage` = as.numeric(gsub(",", "", `Total Tonnage`))) %>%
+  select(-Month, -Year) %>%
+  arrange(Date) %>%
+  relocate(Date) %>%
+  filter(!is.na(`Total Tonnage`))
 ```
