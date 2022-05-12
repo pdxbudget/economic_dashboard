@@ -22,6 +22,16 @@ valueBox(
       get_fred_latest_value(data$fred$home_price), accuracy = 1L))
 ```
 
+### Year-over-Year Change
+
+```{r}
+yoy <- get_fred_yoy(data$fred$home_price)
+
+valueBox(scales::percent(yoy, accuracy = 0.1),
+         color = case_when(yoy > .01 ~ "danger",
+                           yoy < -.01 ~ "success",
+                           TRUE ~ "warning"))
+```
 
 Row
 -------------------------------------

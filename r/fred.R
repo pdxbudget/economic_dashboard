@@ -40,3 +40,22 @@ get_fred_latest_value <- function(df) {
       pull(value)
   }
 }
+
+get_fred_yoy <- function(df) {
+  latest <- get_fred_latest_value(df)
+  
+  if (length(unique(df$series_id)) == 1) {
+    # if only 1 series_id, assume that we're not 
+    # comparing to peer regions
+    last_year <- df %>%
+      filter(date == ymd("2022-03-01") - years(1)) %>%
+      pull(value)
+  } else {
+    last_year <- df %>%
+      filter(series_id == "Portland",
+             date == ymd("2022-03-01") - years(1)) %>%
+      pull(value)
+  }
+  
+  (latest - last_year) / last_year
+}

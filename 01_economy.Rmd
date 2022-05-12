@@ -21,6 +21,17 @@ valueBox(
       get_fred_latest_value(data$fred$employ) , accuracy = 1L))
 ```
 
+### Year-over-Year Change
+
+```{r}
+yoy <- get_fred_yoy(data$fred$employ)
+
+valueBox(scales::percent(yoy, accuracy = 0.1),
+         color = case_when(yoy > .01 ~ "success",
+                           yoy < -.01 ~ "danger",
+                           TRUE ~ "warning"))
+```
+
 Row
 -------------------------------------
 
@@ -50,7 +61,18 @@ data$fred$unemploy <-
 
 valueBox(
     format_number(
-      get_fred_latest_value(data$fred$unemploy), accuracy = 1L))
+      get_fred_latest_value(data$fred$unemploy), accuracy = 0.1))
+```
+
+### Year-over-Year Change
+
+```{r}
+yoy <- get_fred_yoy(data$fred$unemploy)
+
+valueBox(scales::percent(yoy, accuracy = 0.1),
+         color = case_when(yoy > .01 ~ "danger",
+                           yoy < -.01 ~ "success",
+                           TRUE ~ "warning"))
 ```
 
 Row
@@ -82,6 +104,16 @@ valueBox(
       get_fred_latest_value(data$fred$cpi), accuracy = 1L))
 ```
 
+### Year-over-Year Change
+
+```{r}
+yoy <- get_fred_yoy(data$fred$cpi)
+
+valueBox(scales::percent(yoy, accuracy = 0.1),
+         color = case_when(yoy > .01 ~ "success",
+                           yoy < -.01 ~ "danger",
+                           TRUE ~ "warning"))
+```
 
 Row
 -------------------------------------
