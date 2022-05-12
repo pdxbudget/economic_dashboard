@@ -19,6 +19,7 @@ library(plotly)
 library(viridis)
 library(flexdashboard)
 library(scales)
+library(pdftools)
 
 params <- list(
   start_date = ymd("2018-07-01"),

@@ -32,7 +32,7 @@ valueBox(scales::percent(yoy, accuracy = 0.1),
                            TRUE ~ "warning"))
 ```
 
-Row
+Row {data-height=350}
 -------------------------------------
 
 ### History
@@ -40,6 +40,10 @@ Row
 ```{r}
 make_plot(data$fred$employ, group = "series_id")
 ```
+
+### Context
+
+We will explain this here
 
 Row {data-height=75}
 -------------------------------------
@@ -75,7 +79,7 @@ valueBox(scales::percent(yoy, accuracy = 0.1),
                            TRUE ~ "warning"))
 ```
 
-Row
+Row {data-height=350}
 -------------------------------------
 
 ### History
@@ -83,6 +87,10 @@ Row
 ```{r}
 make_plot(data$fred$unemploy, group = "series_id")
 ```
+
+### Context
+
+We will explain this here
 
 Row {data-height=75}
 -------------------------------------
@@ -110,12 +118,12 @@ valueBox(
 yoy <- get_fred_yoy(data$fred$cpi)
 
 valueBox(scales::percent(yoy, accuracy = 0.1),
-         color = case_when(yoy > .01 ~ "success",
-                           yoy < -.01 ~ "danger",
+         color = case_when(yoy > .01 ~ "danger",
+                           yoy < -.01 ~ "success",
                            TRUE ~ "warning"))
 ```
 
-Row
+Row {data-height=350}
 -------------------------------------
 
 ### History
@@ -123,3 +131,7 @@ Row
 ```{r}
 make_plot(data$fred$cpi)
 ```
+
+### Context
+
+We will explain this here

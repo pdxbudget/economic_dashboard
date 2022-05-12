@@ -52,7 +52,7 @@ valueBox(
   icon = "fa-dolly")
 ```
 
-Row
+Row {data-height=350}
 -------------------------------------
 ### History
 
@@ -68,3 +68,7 @@ Row
       theme(axis.text.x = element_text(angle = 45),
             axis.title.x = element_blank()))
 ```
+
+### Context
+
+We will explain this here
