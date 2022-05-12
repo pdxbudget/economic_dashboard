@@ -27,7 +27,7 @@ Row
 ### History
 
 ```{r}
-plot_fred(data$fred$employ)
+make_plot(data$fred$employ, group = "series_id")
 ```
 
 Row {data-height=75}
@@ -59,7 +59,7 @@ Row
 ### History
 
 ```{r}
-plot_fred(data$fred$unemploy)
+make_plot(data$fred$unemploy, group = "series_id")
 ```
 
 Row {data-height=75}
@@ -89,5 +89,5 @@ Row
 ### History
 
 ```{r}
-plot_fred(data$fred$cpi)
+make_plot(data$fred$cpi)
 ```

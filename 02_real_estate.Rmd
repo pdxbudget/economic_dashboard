@@ -29,7 +29,7 @@ Row
 ### History
 
 ```{r}
-plot_fred(data$fred$cpi)
+make_plot(data$fred$home_price)
 ```
 
 
