@@ -23,7 +23,7 @@ library(pdftools)
 
 params <- list(
   start_date = ymd("2018-07-01"),
-  end_date = today() - months(2)
+  end_date = floor_date(today() - months(2), unit = "month")
 )
 
 source("r/fred.R")
