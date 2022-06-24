@@ -27,6 +27,7 @@ params <- list(
 )
 
 source("r/fred.R")
+source("r/ytd.R")
 source("r/formatting.R")
 source("r/plotting.R")
 ```
