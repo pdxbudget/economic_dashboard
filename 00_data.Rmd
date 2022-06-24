@@ -53,20 +53,48 @@ if (
   # ... fetch new data
   
   download.file(
-    "https://cdn.portofportland.com/pdfs/March%202022%20Statistics%20(Excel).xlsx", 
+    paste0(
+    "https://cdn.portofportland.com/pdfs/",
+    month(params$end_date, label = TRUE, abbr = FALSE),
+    "%20",
+    year(params$end_date),
+    "%20Statistics%20(Excel).xlsx"), 
     destfile = "inputs/data_port_air.xlsx", mode = "wb")
+  
+  data$port$passenger <- read_xlsx(
+    "inputs/data_port_air.xlsx", sheet = "Passenger Traffic Report",
+    skip = 5)
+  
+  data$port <- data$port %>%
+    map(filter, Carrier %in% c("PDX Total", "PDX Total *")) %>%
+    map(select, 2) # keep that month's column only
+  
+  names(data$port$passenger) <- "Passengers"
+  
+  data$port$passenger_historical <- read_xlsx(
+    "inputs/data_port_air_historical.xlsx", sheet = "Passenger")
+  
+  data$port$passenger_historical <-
+    bind_rows(data$port$passenger_historical,
+              tibble(Month = floor_date(params$end_date, unit = "month"),
+                     Passengers = as.numeric(data$port$passenger))) %>%
+    arrange(Month)
+   data$port$passenger_historical %>%
+    arrange(Month) %>%
+     
+  saveRDS(data$port$passenger_historical, "inputs/data_port_air_historical.rds")
+
 }
 
-data$port$passenger <- read_xlsx(
-  "inputs/data_port_air.xlsx", sheet = "Passenger Traffic Report",
-  skip = 5)
 data$port$freight <- read_xlsx(
   "inputs/data_port_air.xlsx", sheet = "Freight Traffic Report",
   skip = 5)
 
 data$port <- data$port %>%
   map(filter, Carrier %in% c("PDX Total", "PDX Total *")) %>%
-  map(select, 5:7) # keep YTD columns only
+  map(select, 2) # keep that month's column only
+
+
 ```
 
 ```{r, data_port_marine}
