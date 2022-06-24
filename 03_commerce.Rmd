@@ -14,14 +14,11 @@ Row
 ### Total Year-to-Date Air Passengers as of `r paste(month(params$end_date, label = TRUE), year(params$end_date))`
 
 ```{r air_passengers_month}
-ytd <- data$port$passenger_historical %>%
-  filter(Month <= params$end_date,
-         Month >= floor_date(params$end_date, unit = "year")) %>%
-  summarize(Passengers = sum(Passengers, na.rm = TRUE)) %>%
-  pull("Passengers")
+ytd_current <- get_ytd_current(
+  data$port$passenger_historical, "Month", "Passengers", params)
 
 valueBox(
-    format_number(ytd, accuracy = 1L),
+    format_number(ytd_current, accuracy = 1L),
     icon = "fa-plane")
 ```
 
@@ -36,7 +33,7 @@ ytd_last <- data$port$passenger_historical %>%
   pull("Passengers")
 
 valueBox(scales::percent(
-  (ytd - ytd_last) / ytd_last, accuracy = 0.1),
+  (ytd_current - ytd_last) / ytd_last, accuracy = 0.1),
          color = case_when(yoy > .01 ~ "success",
                            yoy < -.01 ~ "danger",
                            TRUE ~ "warning"))

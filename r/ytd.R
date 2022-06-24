@@ -1,4 +1,4 @@
-get_current_ytd <- function(df, date, value) {
+get_ytd_current <- function(df, date, value, params) {
   df %>%
   filter(!!sym(date) < (params$end_date + months(1)),
          !!sym(date) > (floor_date(params$end_date, unit = "year") - months(1))) %>%
