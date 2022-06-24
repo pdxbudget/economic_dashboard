@@ -10,12 +10,47 @@ h3("Total Air Passengers")
 
 Row
 -------------------------------------
-### Total Air Passengers as of March 2022 (YTD)
 
-```{r}
+### Total Year-to-Date Air Passengers as of `r paste(month(params$end_date, label = TRUE), year(params$end_date))`
+
+```{r air_passengers_month}
+ytd <- data$port$passenger_historical %>%
+  filter(Month <= params$end_date,
+         Month >= floor_date(params$end_date, unit = "year")) %>%
+  summarize(Passengers = sum(Passengers, na.rm = TRUE)) %>%
+  pull("Passengers")
+
 valueBox(
-  format_number(data$port$passenger[[1]], accuracy = 1L),
-  icon = "fa-plane")
+    format_number(ytd, accuracy = 1L),
+    icon = "fa-plane")
+```
+
+### Year-over-Year Change
+
+```{r air_passengers_yoy}
+
+ytd_last <- data$port$passenger_historical %>%
+  filter(Month <= params$end_date - years(1),
+         Month >= floor_date(params$end_date, unit = "year") - years(1)) %>%
+  summarize(Passengers = sum(Passengers, na.rm = TRUE)) %>%
+  pull("Passengers")
+
+valueBox(scales::percent(
+  (ytd - ytd_last) / ytd_last, accuracy = 0.1),
+         color = case_when(yoy > .01 ~ "success",
+                           yoy < -.01 ~ "danger",
+                           TRUE ~ "warning"))
+```
+
+Row {data-height=350}
+-------------------------------------
+
+### History
+
+```{r air_passengers_history}
+data$port$passenger_historical %>%
+  mutate(Month = as.Date(Month)) %>%
+make_plot(x = "Month", y = "Passengers")
 ```
 
 Row {data-height=75}
