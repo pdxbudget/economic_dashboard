@@ -100,7 +100,8 @@ if (
   # ... fetch new data
   
   download.file(
-    "https://cdn.portofportland.com/pdfs/ExecDirReport2022Mar.pdf", 
+    paste0("https://cdn.portofportland.com/pdfs/ExecDirReport",
+           year(params$end_date), month(params$end_date, label = TRUE), ".pdf"), 
     destfile = "inputs/data_port_marine.pdf", mode = "wb")
 }
 
