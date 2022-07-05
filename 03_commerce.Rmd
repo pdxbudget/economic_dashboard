@@ -14,8 +14,8 @@ Row
 ### Total Year-to-Date Air Passengers as of `r paste(month(params$end_date, label = TRUE), year(params$end_date))`
 
 ```{r air_passengers_month}
-ytd_current <- get_ytd_current(
-  data$port$passenger_historical, "Month", "Passengers", params)
+ytd_current <- get_ytd(
+  data$port$passenger_historical, "current", "Month", "Passengers", params)
 
 valueBox(
     format_number(ytd_current, accuracy = 1L),
@@ -26,14 +26,13 @@ valueBox(
 
 ```{r air_passengers_yoy}
 
-ytd_last <- data$port$passenger_historical %>%
-  filter(Month <= params$end_date - years(1),
-         Month >= floor_date(params$end_date, unit = "year") - years(1)) %>%
-  summarize(Passengers = sum(Passengers, na.rm = TRUE)) %>%
-  pull("Passengers")
+ytd_last <- get_ytd(
+  data$port$passenger_historical, "last", "Month", "Passengers", params)
+
+yoy <- (ytd_current - ytd_last) / ytd_last
 
 valueBox(scales::percent(
-  (ytd_current - ytd_last) / ytd_last, accuracy = 0.1),
+  yoy, accuracy = 0.1),
          color = case_when(yoy > .01 ~ "success",
                            yoy < -.01 ~ "danger",
                            TRUE ~ "warning"))
@@ -59,12 +58,42 @@ h3("Total Air Freight")
 
 Row
 -------------------------------------
-### Total Air Freight as of March 2022 (YTD in Tons)
+### Total Year-to-Date Tons of Air Freight as of `r paste(month(params$end_date, label = TRUE), year(params$end_date))`
 
-```{r}
+```{r air_freight_month}
+ytd_current <- get_ytd(
+  data$port$freight_historical, "current", "Month", "Freight", params)
+
 valueBox(
-  format_number(data$port$freight[[1]], accuracy = 1L), 
-  icon = "fa-dolly")
+    format_number(ytd_current, accuracy = 1L),
+    icon = "fa-plane")
+```
+
+### Year-over-Year Change
+
+```{r air_freight_yoy}
+
+ytd_last <- get_ytd(
+  data$port$freight_historical, "last", "Month", "Freight", params)
+
+yoy <- (ytd_current - ytd_last) / ytd_last
+
+valueBox(scales::percent(
+  yoy, accuracy = 0.1),
+         color = case_when(yoy > .01 ~ "success",
+                           yoy < -.01 ~ "danger",
+                           TRUE ~ "warning"))
+```
+
+Row {data-height=350}
+-------------------------------------
+
+### History
+
+```{r air_freight_history}
+data$port$freight_historical %>%
+  mutate(Month = as.Date(Month)) %>%
+make_plot(x = "Month", y = "Freight")
 ```
 
 Row {data-height=75}
